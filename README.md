@@ -1,1 +1,1 @@
-# efi-workshop
+# efi-workshop  <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="138" />
