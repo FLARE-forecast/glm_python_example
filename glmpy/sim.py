@@ -8,7 +8,7 @@ import datetime
 import pandas as pd
 import multiprocessing
 
-from glmpy.nml.nml import NMLDict, NML
+from glmpy.nml.nml import NMLDict, NML, NMLBlock
 from glmpy.nml.glm_nml import GLMNML
 from typing import Union, Dict, List, Any, Callable
 from abc import ABC, abstractmethod
@@ -135,13 +135,31 @@ class Sim(ABC):
         with open(path, "wb") as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    def set_param_value(self, nml:str, block:str, param:str, value:Any):
-        self.nml[nml].blocks[block].params[param].value = value
+    def set_param_value(
+            self, nml_name:str, block_name:str, param_name:str, value:Any
+        ):
+        self.nml[nml_name].blocks[block_name].params[param_name].value = value
         self.validate()
     
-    def get_param_value(self, nml:str, block:str, param:str):
-        value = self.nml[nml].blocks[block].params[param].value
+    def get_param_value(self, nml_name:str, block_name:str, param_name:str) -> Any:
+        value = self.nml[nml_name].blocks[block_name].params[param_name].value
         return value
+    
+    def set_block(self, nml_name:str, block:NMLBlock):
+        self.nml[nml_name].blocks[block.block_name] = block
+        self.validate()
+    
+    def get_block(self, nml_name:str, block_name:str) -> NMLBlock:
+        return self.nml[nml_name].blocks[block_name]
+
+    def set_nml(self, nml:NML):
+        self.nml[nml.nml_name] = nml
+        self.validate()
+    
+    def get_nml(self, nml_name: str) -> NML:
+        return self.nml[nml_name]
+    
+
 
     def run(
         self,

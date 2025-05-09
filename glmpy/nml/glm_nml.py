@@ -255,7 +255,7 @@ class MixingBlock(NMLBlock):
 
 
 @BLOCK_REGISTER.register()
-class WQGLMSetupBlock(NMLBlock):
+class WQSetupBlock(NMLBlock):
     block_name = "wq_setup"
 
     def __init__(
@@ -936,7 +936,7 @@ class GLMNML(NML):
         morphometry: Union[MorphometryBlock, None] = None,
         init_profiles: Union[InitProfilesBlock, None] = None,
         mixing: Union[MixingBlock, None] = None,
-        wq_setup: Union[WQGLMSetupBlock, None] = None,
+        wq_setup: Union[WQSetupBlock, None] = None,
         output: Union[OutputBlock, None] = None,
         light: Union[LightBlock, None] = None,
         bird_model: Union[BirdModelBlock, None] = None,

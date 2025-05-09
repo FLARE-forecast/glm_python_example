@@ -208,12 +208,12 @@ class NMLParamDict(NMLDictBase):
         return (NMLParamDict, (), self.__getstate__())
     
     def __setitem__(self, key, value):
-        if self.strict:
-            raise KeyError(
-                "Overwriting or adding additional parameters is restricted "
-                "when the `strict` attribute is set to True. Set `strict` to "
-                "False to override this error."
-            )
+        # if self.strict:
+        #     raise KeyError(
+        #         "Overwriting or adding additional parameters is restricted "
+        #         "when the `strict` attribute is set to True. Set `strict` to "
+        #         "False to override this error."
+        #     )
         if not isinstance(value, NMLParam):
             raise TypeError(
                 f"{value} must be a instance of NMLParam but got type "
@@ -236,7 +236,7 @@ class NMLBlock(ABC):
     def __init__(self, **kwargs):
         self.params = NMLParamDict(**kwargs)
         self.required = False
-        self.block_name = "unnamed_block"
+       # self.block_name = "unnamed_block"
         self.strict = False
 
     @property
@@ -251,7 +251,7 @@ class NMLBlock(ABC):
     def __str__(self):
         return self.params.__str__()
 
-    def get_block_dict(self, none_params: bool = True) -> dict:
+    def to_dict(self, none_params: bool = True) -> dict:
         self.validate()            
         param_dict = {}
         for key, nml_param in self.params.items():
@@ -371,13 +371,13 @@ class NMLBlockDict(NMLDictBase):
         return (NMLBlockDict, (), self.__getstate__())
     
     def __setitem__(self, key, value):
-        if self.strict:
-            if key not in self.keys():
-                raise KeyError(
-                    "Adding additional blocks is restricted when the "
-                    "`strict` attribute is set to True. Set `strict` to True "
-                    "to override this error."
-                )
+        # if self.strict:
+        #     if key not in self.keys():
+        #         raise KeyError(
+        #             "Adding additional blocks is restricted when the "
+        #             "`strict` attribute is set to True. Set `strict` to True "
+        #             "to override this error."
+        #         )
         if not isinstance(value, NMLBlock) and value is not None:
             raise TypeError(
                 f"{value} must be a instance of NMLBlock but got type "
@@ -385,11 +385,11 @@ class NMLBlockDict(NMLDictBase):
             )
         super(NMLDictBase, self).__setitem__(key, value)
 
-    def _get_nml_dict(self, none_blocks: bool = True, none_params: bool = True):
+    def _to_dict(self, none_blocks: bool = True, none_params: bool = True):
         nml_dict = {}
         for block_name, nml_block in self.items():
             if isinstance(nml_block, NMLBlock):
-                nml_dict[block_name] = nml_block.get_block_dict(none_params)
+                nml_dict[block_name] = nml_block.to_dict(none_params)
             elif nml_block is None and none_blocks:
                 nml_dict[block_name] = nml_block
         return nml_dict
@@ -424,9 +424,9 @@ class NML(ABC):
     def __str__(self):
         return self.blocks.__str__()
 
-    def get_nml_dict(self, none_blocks: bool = True, none_params: bool = True):
+    def to_dict(self, none_blocks: bool = True, none_params: bool = True) -> dict:
         self.validate()
-        return self.blocks._get_nml_dict(none_blocks, none_params)
+        return self.blocks._to_dict(none_blocks, none_params)
     
     def get_deepcopy(self):
         return copy.deepcopy(self)
@@ -437,9 +437,26 @@ class NML(ABC):
         ):
         self.validate()
         nml_writer = NMLWriter(
-            nml_dict=self.blocks._get_nml_dict(False, False)
+            nml_dict=self.blocks._to_dict(False, False)
         )
         nml_writer.to_nml(nml_file)
+    
+    def set_param_value(
+            self, block_name:str, param_name:str, value:Any
+        ):
+        self.blocks[block_name].params[param_name].value = value
+        self.validate()
+    
+    def get_param_value(self, block_name:str, param_name:str) -> Any:
+        value = self.blocks[block_name].params[param_name].value
+        return value
+    
+    def set_block(self, block:NMLBlock):
+        self.blocks[block.block_name] = block
+        self.validate()
+    
+    def get_block(self, block_name:str) -> NMLBlock:
+        return self.blocks[block_name]
 
     @abstractmethod
     def validate(self):
@@ -480,13 +497,13 @@ class NMLDict(NMLDictBase):
                         f"{nml_name} is not of type NMLBlock or None."
                     )
 
-    def _get_nml_dict(
+    def _to_dict(
             self, none_blocks: bool = True, none_params: bool = True
         ):
         nml_dict = {}
         for block_name, nml_block in self.items():
             if isinstance(nml_block, NMLBlock):
-                nml_dict[block_name] = nml_block.get_block_dict(none_params)
+                nml_dict[block_name] = nml_block.to_dict(none_params)
             elif nml_block is None and none_blocks:
                 nml_dict[block_name] = nml_block
         return nml_dict
