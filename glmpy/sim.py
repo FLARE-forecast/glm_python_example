@@ -25,6 +25,7 @@ class Sim(ABC):
     def __init__(self):
         self.nml = NMLDict()
         self.bcs = BcsDict()
+        self.aed_dbase = {}
         self.outputs_dir = "."
     
     @property
@@ -66,6 +67,15 @@ class Sim(ABC):
                 self.nml["glm"].write_nml(
                     os.path.join(self.outputs_dir, self.sim_name, "glm3.nml")
                 )
+            elif nml_name == "aed":
+                os.makedirs(
+                    os.path.join(self.outputs_dir, self.sim_name, "aed")
+                )
+                self.nml["aed"].write_nml(
+                    os.path.join(
+                        self.outputs_dir, self.sim_name, "aed", "aed.nml"
+                    )
+                )
             else:
                 self.nml[nml_name].write_nml(
                     os.path.join(
@@ -75,6 +85,10 @@ class Sim(ABC):
 
     @abstractmethod
     def prepare_bcs(self):
+        pass
+
+    @abstractmethod
+    def prepare_aed_dbases(self):
         pass
 
     def write_bc_csv(self, nml: str, block: str, bc_fl_param: str):
@@ -159,8 +173,6 @@ class Sim(ABC):
     def get_nml(self, nml_name: str) -> NML:
         return self.nml[nml_name]
     
-
-
     def run(
         self,
         write_log: bool = False,
@@ -171,6 +183,7 @@ class Sim(ABC):
         self.validate()
         self.prepare_inputs()
         self.prepare_bcs()
+        self.prepare_aed_dbases()
         nml_file = os.path.join(self.outputs_dir, self.sim_name, "glm3.nml")
         GLMRunner.run(
             glm_nml_path=nml_file,
@@ -187,6 +200,7 @@ class GLMSim(Sim):
         self,
         glm_nml: GLMNML,
         aed_nml: Union[None, List[NML]] = None,
+        aed_dbase: List[str] = [],
         bcs: Union[None, Dict[str, pd.DataFrame]] = None,
         sim_name: Union[str, None] = None,
         outputs_dir: str = ".",
@@ -198,12 +212,40 @@ class GLMSim(Sim):
             for nml_file in aed_nml:
                 self.nml[nml_file.nml_name] = nml_file
         self.outputs_dir = outputs_dir
+        self.aed_dbase = aed_dbase
         if bcs is not None:
             self.bcs.update(bcs)
 
+    # prepare_aux_files
     def prepare_bcs(self):
         self.write_bc_csv("glm", "meteorology", "meteo_fl")
 
+    def prepare_aed_dbases(self):
+        self.copy_aed_dbase("aed", "aed_zooplankton", "dbase")
+        self.copy_aed_dbase("aed", "aed_phytoplankton", "dbase")
+
+    
+    def copy_aed_dbase(
+        self, nml_name:str, block_name:str, param_name: str
+    ):
+        if nml_name in self.nml.keys():
+            if self.nml[nml_name].blocks[block_name] is not None:
+                if param_name in self.nml[nml_name].blocks[block_name].params.keys():
+                    param = self.nml[nml_name].blocks[block_name].params[param_name]
+                    dest_path = param.value
+                    if dest_path is not None:
+                        dest_file_name = os.path.basename(dest_path)
+                        for src_file_path in self.aed_dbase:
+                            if dest_file_name == os.path.basename(src_file_path):
+                                shutil.copyfile(
+                                    src=src_file_path,
+                                    dst=os.path.join(
+                                        self.outputs_dir, 
+                                        self.sim_name, 
+                                        dest_path
+                                    )
+                                )
+    
     def validate(self):
         self.nml.validate()
     

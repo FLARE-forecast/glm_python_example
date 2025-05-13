@@ -273,7 +273,7 @@ class WQSetupBlock(NMLBlock):
             "wq_lib",
             str,
             wq_lib,
-            val_switch=["aed2", "fabm"],
+            val_switch=["aed", "aed2", "fabm"],
         )
         self.params["wq_nml_file"] = NMLParam("wq_nml_file", str, wq_nml_file)
         self.params["bioshade_feedback"] = NMLParam(

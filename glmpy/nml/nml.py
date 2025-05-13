@@ -5,7 +5,7 @@ import f90nml
 import warnings
 import regex as re
 
-from collections import UserDict
+from collections import OrderedDict
 from abc import ABC, abstractmethod
 from importlib.metadata import version
 from datetime import datetime
@@ -386,7 +386,7 @@ class NMLBlockDict(NMLDictBase):
         super(NMLDictBase, self).__setitem__(key, value)
 
     def _to_dict(self, none_blocks: bool = True, none_params: bool = True):
-        nml_dict = {}
+        nml_dict = OrderedDict()
         for block_name, nml_block in self.items():
             if isinstance(nml_block, NMLBlock):
                 nml_dict[block_name] = nml_block.to_dict(none_params)
@@ -457,7 +457,7 @@ class NML(ABC):
     
     def get_block(self, block_name:str) -> NMLBlock:
         return self.blocks[block_name]
-
+    
     @abstractmethod
     def validate(self):
         pass
@@ -580,7 +580,6 @@ BLOCK_REGISTER = NMLRegistry('blocks')
 
 class NMLWriter():
     def __init__(self, nml_dict: dict):
-        
         self._nml = Namelist(nml_dict)
 
     def to_nml(self, nml_file: str):
@@ -615,7 +614,7 @@ class NMLReader():
                 nml = nml.todict()
         return nml
 
-    def to_nml_obj(self, nml_obj, block_registry: NMLRegistry):
+    def to_nml_obj(self, nml_obj, block_registry: NMLRegistry = BLOCK_REGISTER):
         nml = self.to_dict()
         nml_args = {}
         for block_name in nml.keys():
