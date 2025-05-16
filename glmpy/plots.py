@@ -11,6 +11,41 @@ from matplotlib.image import AxesImage
 from datetime import datetime, timedelta
 
 
+class WQPlotter:
+    def __init__(self, wq_csv_path: Union[str, None]=None):
+        self.wq_csv = wq_csv_path
+        self._date_formatter = mdates.DateFormatter("%d/%m/%y")
+    
+    @property
+    def wq_csv(self):
+        return self._wq_csv
+    
+    @wq_csv.setter
+    def wq_csv(self, wq_csv_path):
+        self._wq_csv = wq_csv_path
+        if self._wq_csv is not None:
+          self.wq_pd = pd.read_csv(self._wq_csv)
+          time = list(self.wq_pd["time"])
+          time = [t.split(" ")[0] for t in time]
+          self.wq_pd["time"] = time
+    
+    def get_vars(self):
+      vars = list(self.wq_pd.columns.values)
+      if "time" in vars:
+        vars.remove("time")
+      return vars
+    
+    def plot_var(self, ax, var: str, param_dict: dict = {}):
+        out = ax.plot(
+            mdates.date2num(self.wq_pd["time"]),
+            self.wq_pd[var],
+            **param_dict,
+        )
+        ax.xaxis.set_major_formatter(self._date_formatter)
+        ax.set_ylabel(var)
+        ax.set_xlabel("Date")
+
+    
 class LakePlotter:
     """Common plots for the `lake.csv` output.
 
