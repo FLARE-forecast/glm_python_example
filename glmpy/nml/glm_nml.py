@@ -377,9 +377,7 @@ class OutputBlock(NMLBlock):
     def validate(self):
         self.params.validate()
         self.val_list_len_params("csv_point_nlevs", "csv_point_at")
-        self.val_list_len_params("csv_point_nlevs", "csv_point_frombot")
         self.val_list_len_params("csv_point_nvars", "csv_point_vars")
-        self.val_list_len_params("csv_outlet_nvars", "csv_outlet_vars")
 
 
 @BLOCK_REGISTER.register()

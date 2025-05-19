@@ -204,6 +204,7 @@
   },
   "aed_zooplankton": {
     "num_zoops": 3,
+    "the_zoops": [1, 2, 3],
     "dn_target_variable": "OGM_don",
     "pn_target_variable": "OGM_pon",
     "dp_target_variable": "OGM_dop",
