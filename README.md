@@ -2,8 +2,8 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-# efi-workshop : Aquatic Ecosystem Modelling with AED <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
-
+# efi-workshop : <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
+## Aquatic Ecosystem Modelling with AED 
 
 [![Project Status: Active – The project is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GLM](https://img.shields.io/badge/GLM-3.3.3-yellow)](https://github.com/AquaticEcoDynamics/glm-aed)
