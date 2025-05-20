@@ -2,13 +2,14 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-# efi-workshop : <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
-## Aquatic Ecosystem Modelling with AED 
+# efi-workshop <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
 
 [![Project Status: Active – The project is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GLM](https://img.shields.io/badge/GLM-3.3.3-yellow)](https://github.com/AquaticEcoDynamics/glm-aed)
 [![AED](https://img.shields.io/badge/AED-2.4.3-orange)](https://aquatic.science.uwa.edu.au/research/models/AED/quickstart.html)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
+## Aquatic Ecosystem Modelling with AED 
 
 This repo is materials for an AED workshop for the [EFI 2025 Conference](https://ecoforecast.org/efi-2025-conference/) using a pre-release of `glm-py` v0.5. 
 
