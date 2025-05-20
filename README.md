@@ -10,6 +10,7 @@
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 
 <br>
+
 ## Aquatic Ecosystem Modelling with AED 
 
 This repo is materials for an AED workshop for the [EFI 2025 Conference](https://ecoforecast.org/efi-2025-conference/) using a pre-release of `glm-py` v0.5. 
