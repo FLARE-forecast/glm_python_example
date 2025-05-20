@@ -830,7 +830,44 @@ class ZooplanktonBlock(NMLBlock):
     
     def validate(self):
         self.params.validate()
-        
+
+
+@BLOCK_REGISTER.register()
+class MacrophyteBlock(NMLBlock):
+    block_name = "aed_marcophyte"
+
+    def __init__(
+        self,
+        num_mphy: Union[int, None] = None,
+        the_mphy: Union[List[int], None] = None,
+        n_zones: Union[int, None] = None,
+        active_zones: Union[List[int], None] = None,
+        simstaticbiomass: Union[bool, None] = None,
+        simmacfeedback: Union[bool, None] = None,
+        dbase: Union[str, None] = None,
+    ):
+        super().__init__()
+        self.params["num_mphy"] = NMLParam("num_mphy", int, num_mphy)
+        self.params["the_mphy"] = NMLParam(
+            "the_mphy", int, the_mphy, is_list=True
+        )
+        self.params["n_zones"] = NMLParam("n_zones", int, n_zones)
+        self.params["active_zones"] = NMLParam(
+            "active_zones", int, active_zones, is_list=True
+        )
+        self.params["simstaticbiomass"] = NMLParam(
+            "simstaticbiomass", bool, simstaticbiomass
+        )
+        self.params["simmacfeedback"] = NMLParam(
+            "simmacfeedback", bool, simmacfeedback
+        )
+        self.params["dbase"] = NMLParam("dbase", str, dbase)
+
+    def validate(self):
+        self.params.validate()
+        self.val_list_len_params("num_mphy", "the_mphy")
+        self.val_list_len_params("n_zones", "active_zones")
+
 
 class AEDNML(NML):
     nml_name = "aed"
@@ -847,6 +884,7 @@ class AEDNML(NML):
         aed_organic_matter: Union[OrganicMatterBlock, None] = None,
         aed_phytoplankton: Union[PhytoplanktonBlock, None] = None,
         aed_zooplankton: Union[ZooplanktonBlock, None] = None,
+        aed_macrophyte: Union[MacrophyteBlock, None] = None,
     ):
         super().__init__()
         self.blocks["aed_models"] = aed_models
@@ -859,6 +897,7 @@ class AEDNML(NML):
         self.blocks["aed_organic_matter"] = aed_organic_matter
         self.blocks["aed_phytoplankton"] = aed_phytoplankton
         self.blocks["aed_zooplankton"] = aed_zooplankton
+        self.blocks["aed_macrophyte"] = aed_macrophyte
 
     def validate(self):
         self.blocks.validate()
