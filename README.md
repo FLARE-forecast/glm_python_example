@@ -1,8 +1,9 @@
-# efi-workshop  <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
-
 <a target="_blank" href="https://colab.research.google.com/github/AquaticEcoDynamics/efi-workshop/blob/main/efi-workshop.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
+
+# efi-workshop  <img src="https://raw.githubusercontent.com/AquaticEcoDynamics/efi-workshop/main/media/glmpy_logo.png" align="right" height="100" />
+
 
 [![Project Status: Active – The project is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GLM](https://img.shields.io/badge/GLM-3.3.3-yellow)](https://github.com/AquaticEcoDynamics/glm-aed)
@@ -13,8 +14,8 @@ This repo is materials for an AED workshop for the [EFI 2025 Conference](https:/
 
 The workshop has users to sequentially develop a aquatic ecosystem model of a temperate freshwater lake. Pre-configured templates of model configurations of increasing complexity (from oxygen to zooplankton) are included and visualised through a Jupyter notebook. To launch the notebook, click on the `Google Colab` button above.
 
-<img src="media/glmpy_image1.png" width="200" />
-<img src="media/glmpy_image2.png" width="200" />
+<img src="media/glmpy_image1.png" width="400" />
+<img src="media/glmpy_image2.png" width="400" />
 
 ## Contact
 
