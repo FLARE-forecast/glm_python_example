@@ -223,6 +223,7 @@ class GLMSim(Sim):
     def prepare_aed_dbases(self):
         self.copy_aed_dbase("aed", "aed_zooplankton", "dbase")
         self.copy_aed_dbase("aed", "aed_phytoplankton", "dbase")
+        self.copy_aed_dbase("aed", "aed_macrophyte", "dbase")
 
     
     def copy_aed_dbase(
