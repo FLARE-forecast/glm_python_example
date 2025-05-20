@@ -834,7 +834,7 @@ class ZooplanktonBlock(NMLBlock):
 
 @BLOCK_REGISTER.register()
 class MacrophyteBlock(NMLBlock):
-    block_name = "aed_marcophyte"
+    block_name = "aed_macrophyte"
 
     def __init__(
         self,
