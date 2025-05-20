@@ -4,4 +4,4 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-Workshop for the EFI 2025 Conference using a pre-release of glm-py v0.5. 
+Workshop for the [EFI 2025 Conference](https://ecoforecast.org/efi-2025-conference/) using a pre-release of glm-py v0.5. 

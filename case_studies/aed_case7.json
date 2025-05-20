@@ -219,8 +219,8 @@
     "num_mphy": 1,
     "the_mphy": [1],
     "n_zones": 2,
-    "active_zones": [3,4],
-    "simstaticbiomass": true,
+    "active_zones": [2,3],
+    "simstaticbiomass": false,
     "simmacfeedback": true,
     "dbase": "aed/aed_macrophyte_pars.csv"
   }
