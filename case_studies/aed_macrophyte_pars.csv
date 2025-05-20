@@ -1,4 +1,4 @@
- 'm_name',submerged, 'emergent', 'riparian'
+ 'm_name','submerged', 'emergent', 'riparian'
  'm0',0.3,0.4,0.4
  'R_growth',3.3,0.4,0.3
  'fT_Method',1,1,1
